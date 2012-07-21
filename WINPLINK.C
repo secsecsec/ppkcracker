@@ -644,7 +644,6 @@ int main(int argc, char **argv)
 		realtype = type;
 		//type = import_target_type(type);
 	}
-	printf("%d\n", type);
 
 	comment = NULL;
 	if (realtype == SSH_KEYTYPE_SSH2) {
@@ -662,7 +661,7 @@ int main(int argc, char **argv)
 		printf("error, not valid private key!\n");
 		return 1;
 	}
-	printf("len: %i/%i\n", public_blob_len, private_blob_len);
+	// printf("len: %i/%i\n", public_blob_len, private_blob_len);
 	private_blobXX=(unsigned char*)malloc(private_blob_len);
 	public_blobXX=(unsigned char*)malloc(public_blob_len);
 
