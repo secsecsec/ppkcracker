@@ -391,6 +391,7 @@ struct ssh2_userkey *LAME_ssh2_load_userkey(char *passphrase, const char **error
 			HMAC_Init(&ctx, mackey, 20, EVP_sha1());
 			HMAC_Update(&ctx, macdata, maclen);
 			HMAC_Final(&ctx, binary, &length);
+			HMAC_CTX_cleanup(&ctx);
 
 
 			//hmac_sha1_simple(mackey, 20, macdata, maclen, binary);
@@ -593,7 +594,7 @@ int main(int argc, char **argv)
 {
 	char pw[1024];
 	FILE *fp;
-	int i;
+	int l;
 
 	int type, realtype;
 	char *comment;
@@ -660,11 +661,9 @@ int main(int argc, char **argv)
 	memcpy(private_blobXX, private_blob, private_blob_len);
 	memcpy(public_blobXX, public_blob, public_blob_len);
 
-
 	while (fgets(pw, 1024, stdin) != NULL) {
-
-		for (i = 0; i < 1024 && pw[i] != 10 && pw[i] != 13; i++);
-		pw[i] = 0;
+		l = strlen(pw);
+		pw[l-1] = 0;
 
 		if (type == SSH_KEYTYPE_SSH1) {
 			fprintf(stderr, "SSH1 key type not supported!\n");
@@ -673,9 +672,7 @@ int main(int argc, char **argv)
 			if (realtype == type) {
 				newkey2 = LAME_ssh2_load_userkey((char*) pw, &errmsg);
 			}
-			if (!newkey2) {
-				if (verbose == 1) printf("UNKNOWN ERROR: %s\n", errmsg);
-			} else {
+			if (newkey2) {
 				printf("Passphrase Found: <%s>\n", pw);
 				return 0;
 			}
@@ -685,7 +682,7 @@ int main(int argc, char **argv)
 
 	}
 
-	printf("\n\nDamn, couldn't not find the passphrase!\n");
+	printf("Damn, couldn't not find the passphrase!\n");
 	if (comment)	sfree(comment);
 	if (encryption)	sfree(encryption);
 	if (mac)	sfree(mac);
