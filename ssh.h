@@ -102,68 +102,6 @@ void ssh_rsakex_encrypt(const struct ssh_hash *h, unsigned char *in, int inlen,
                         unsigned char *out, int outlen,
                         void *key);
 
-typedef struct {
-    uint32 h[4];
-} MD5_Core_State;
-
-struct MD5Context {
-#ifdef MSCRYPTOAPI
-    unsigned long hHash;
-#else
-    MD5_Core_State core;
-    unsigned char block[64];
-    int blkused;
-    uint32 lenhi, lenlo;
-#endif
-};
-
-void MD5Init(struct MD5Context *context);
-void MD5Update(struct MD5Context *context, unsigned char const *buf,
-	       unsigned len);
-void MD5Final(unsigned char digest[16], struct MD5Context *context);
-void MD5Simple(void const *p, unsigned len, unsigned char output[16]);
-
-void *hmacmd5_make_context(void);
-void hmacmd5_free_context(void *handle);
-void hmacmd5_key(void *handle, void const *key, int len);
-void hmacmd5_do_hmac(void *handle, unsigned char const *blk, int len,
-		     unsigned char *hmac);
-
-typedef struct {
-    uint32 h[5];
-    unsigned char block[64];
-    int blkused;
-    uint32 lenhi, lenlo;
-} SHA_State;
-void SHA_Init(SHA_State * s);
-void SHA_Bytes(SHA_State * s, void *p, int len);
-void SHA_Final(SHA_State * s, unsigned char *output);
-void SHA_Simple(void *p, int len, unsigned char *output);
-
-void hmac_sha1_simple(void *key, int keylen, void *data, int datalen,
-		      unsigned char *output);
-typedef struct {
-    uint32 h[8];
-    unsigned char block[64];
-    int blkused;
-    uint32 lenhi, lenlo;
-} SHA256_State;
-void SHA256_Init(SHA256_State * s);
-void SHA256_Bytes(SHA256_State * s, const void *p, int len);
-void SHA256_Final(SHA256_State * s, unsigned char *output);
-void SHA256_Simple(const void *p, int len, unsigned char *output);
-
-typedef struct {
-    uint64 h[8];
-    unsigned char block[128];
-    int blkused;
-    uint32 len[4];
-} SHA512_State;
-void SHA512_Init(SHA512_State * s);
-void SHA512_Bytes(SHA512_State * s, const void *p, int len);
-void SHA512_Final(SHA512_State * s, unsigned char *output);
-void SHA512_Simple(const void *p, int len, unsigned char *output);
-
 struct ssh_cipher {
     void *(*make_context)(void);
     void (*free_context)(void *);

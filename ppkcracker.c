@@ -700,4 +700,6 @@ int main(int argc, char **argv)
 	if (public_blob)	sfree(public_blob);
 	if (private_blob)	sfree(private_blob);
 	if (private_blobXX) sfree(private_blobXX);
+
+	return 0;
 }
