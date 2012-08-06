@@ -1,2 +1,2 @@
-ppkcracker:
-	gcc -o ppkcracker -Wall WINPLINK.C -lcrypto -lstdc++
+target:
+	gcc -o ppkcracker -Wall -O3 WINPLINK.C -lcrypto -lstdc++

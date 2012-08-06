@@ -599,11 +599,11 @@ int main(int argc, char **argv)
 	char *comment;
 	Filename filename;
 
-	int needs_pass;
+	int needs_pass = 0;
 	struct ssh2_userkey *newkey2 = NULL;
 	const char *errmsg = NULL;
 
-	printf( "%s - made by michu@neophob.com - PuTTY private key cracker\n", argv[0]);
+	// printf( "%s - made by michu@neophob.com - PuTTY private key cracker\n", argv[0]);
 
 	if (argc < 2 || argc > 3) {
 		printf( "Usage: %s [PuTTY-Private-Key-File] [-v|-q]\n", argv[0]);
@@ -636,7 +636,7 @@ int main(int argc, char **argv)
 	//src: winpgen.c
 	type = realtype = key_type(&filename);
 	if (type != SSH_KEYTYPE_SSH1 && type != SSH_KEYTYPE_SSH2) {
-		// printf("Error: Couldn't load private key (%s)", key_type_to_str(type));
+		fprintf(stderr, "Error: Couldn't load private key (%s)\n", filename.path);
 		return 2;
 	}
 
@@ -675,6 +675,8 @@ int main(int argc, char **argv)
 		pw[i] = 0;
 
 		if (type == SSH_KEYTYPE_SSH1) {
+			fprintf(stderr, "SSH1 key type not supported!\n");
+			return 3;
 		} else { //SSH_KEYTYPE_SSH2
 			if (realtype == type) {
 				newkey2 = LAME_ssh2_load_userkey((char*) pw, &errmsg);
