@@ -677,7 +677,7 @@ int main(int argc, char **argv)
 			}
 		}
 		memcpy(private_blob, private_blobXX, private_blob_len);
-		memcpy(public_blob, public_blobXX, public_blob_len);
+		// memcpy(public_blob, public_blobXX, public_blob_len);
 
 	}
 
