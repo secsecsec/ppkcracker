@@ -605,21 +605,13 @@ int main(int argc, char **argv)
 
 	// printf( "%s - made by michu@neophob.com - PuTTY private key cracker\n", argv[0]);
 
-	if (argc < 2 || argc > 3) {
-		printf( "Usage: %s [PuTTY-Private-Key-File] [-v|-q]\n", argv[0]);
-		printf( "       -v: verbose mode\n");
+	if (argc < 2) {
+		printf( "Usage: %s [PuTTY-Private-Key-File]\n", argv[0]);
 		printf( "Example:\n");
-		printf( " $ john-mmx -stdout -incremental | %s id_dsa\n",argv[0]);
+		printf( " $ john -stdout -incremental | %s id_dsa\n",argv[0]);
 		printf( " $ %s id_dsa < dictionary\n", argv[0]);
 		printf( "\n");
 		exit(1);
-	}
-
-	if (argc == 3) {
-		if (strcmp(argv[2],"-v")==0) {
-			verbose=1;
-			printf("verbose mode\n");
-		}
 	}
 
 	/*
