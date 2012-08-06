@@ -371,7 +371,6 @@ struct ssh2_userkey *LAME_ssh2_load_userkey(char *passphrase, const char **error
 			DO_STR(comment, commlen);
 			DO_STR(public_blob, public_blob_len);
 			DO_STR(private_blob, private_blob_len);
-
 			free_macdata = 1;
 		}
 
@@ -396,14 +395,14 @@ struct ssh2_userkey *LAME_ssh2_load_userkey(char *passphrase, const char **error
 
 			//hmac_sha1_simple(mackey, 20, macdata, maclen, binary);
 
-			memset(mackey, 0, sizeof(mackey));
-			memset(&s, 0, sizeof(s));
+			// memset(mackey, 0, sizeof(mackey));
+			// memset(&s, 0, sizeof(s));
 		} else {
 			SHA_Simple(macdata, maclen, binary);
 		}
 
 		if (free_macdata) {
-			memset(macdata, 0, maclen);
+			// memset(macdata, 0, maclen);
 			sfree(macdata);
 		}
 
