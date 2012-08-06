@@ -15,7 +15,7 @@
 #include <openssl/hmac.h>
 #include <openssl/aes.h>
 #include <limits.h>
-#include "ssh.h"
+#include "common.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
